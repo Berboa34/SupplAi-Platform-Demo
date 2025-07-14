@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SupplAi - Matching</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+  <style>
+    .chat-toggle { position: fixed; bottom: 20px; right: 20px; z-index: 50; }
+    .slide-in-right { animation: slideInRight 0.3s forwards; }
+    .slide-out-right { animation: slideOutRight 0.3s forwards; }
+    @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    @keyframes slideOutRight { from { transform: translateX(0); } to { transform: translateX(100%); } }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #c5c5c5; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <div class="flex h-screen">
+
+    <aside class="w-64 bg-white shadow-md p-6">
+      <h1 class="text-2xl font-bold mb-8 text-blue-600 flex items-center">
+        <img src="/static/images/logo.png" alt="Logo SupplAi" class="h-8 mr-2">
+        SupplAi
+      </h1>
+      <nav class="space-y-4">
+        <a href="/dashboard.html" class="flex items-center text-gray-700 hover:text-blue-600 p-2 rounded-md hover:bg-blue-50 transition-colors">
+          <i data-lucide="layout-dashboard" class="mr-2 h-5 w-5"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="/matching.html" class="flex items-center text-blue-600 bg-blue-50 p-2 rounded-md hover:bg-blue-100 transition-colors">
+          <i data-lucide="git-merge" class="mr-2 h-5 w-5"></i>
+          <span>Matching</span>
+        </a>
+        <a href="/cronologia.html" class="flex items-center text-gray-700 hover:text-blue-600 p-2 rounded-md hover:bg-blue-50 transition-colors">
+          <i data-lucide="history" class="mr-2 h-5 w-5"></i>
+          <span>Cronologia</span>
+        </a>
+        <a href="/contratti.html" class="flex items-center text-gray-700 hover:text-blue-600 p-2 rounded-md hover:bg-blue-50 transition-colors">
+          <i data-lucide="file-text" class="mr-2 h-5 w-5"></i>
+          <span>Contratti</span>
+        </a>
+        <div class="pt-4 border-t mt-4">
+          <a href="/impostazioni.html" class="flex items-center text-gray-700 hover:text-blue-600 p-2 rounded-md hover:bg-blue-50 transition-colors">
+            <i data-lucide="settings" class="mr-2 h-5 w-5"></i>
+            <span>Impostazioni</span>
+          </a>
+          <a href="/supporto.html" class="flex items-center text-gray-700 hover:text-blue-600 p-2 rounded-md hover:bg-blue-50 transition-colors">
+            <i data-lucide="help-circle" class="mr-2 h-5 w-5"></i>
+            <span>Supporto</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex relative">
+
+      <main class="flex-1 p-10 overflow-y-auto">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-2xl font-bold text-gray-800">Matching Fornitore</h2>
+          <div class="flex items-center gap-4">
+            <div class="flex items-center border rounded-md px-3 py-2 bg-white">
+              <i data-lucide="search" class="mr-2 h-4 w-4 text-gray-500"></i>
+              <input type="text" placeholder="Cerca progetti..." class="outline-none text-sm w-48">
+            </div>
+            <div class="relative">
+              <i data-lucide="bell" class="h-6 w-6 text-gray-600 cursor-pointer"></i>
+              <div class="absolute -top-1 -right-1 bg-red-500 rounded-full w-4 h-4 flex items-center justify-center">
+                <span class="text-white text-xs">3</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-8 rounded-lg shadow mb-8">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">Carica e Analizza Disegno Tecnico</h3>
+            <form id="uploadForm">
+                <input type="file" name="file" required class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 mb-4">
+                <button type="submit" class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center shadow-md">
+                    <i data-lucide="scan-line" class="mr-2 h-5 w-5"></i>
+                    Analizza con IA
+                </button>
+            </form>
+            <div id="resultArea" class="mt-6 hidden">
+                <h4 class="text-lg font-semibold mb-2">Risultati Analisi IA:</h4>
+                <pre class="bg-gray-100 p-4 rounded-md text-sm whitespace-pre-wrap font-mono"></pre>
+            </div>
+            <div id="suppliersArea" class="mt-8 hidden">
+                <h4 class="text-xl font-semibold mb-4 text-gray-800">🚀 Fornitori Suggeriti per Questo Progetto:</h4>
+                <div id="suppliersList" class="space-y-4">
+                    </div>
+            </div>
+        </div>
+        </main>
+
+      <aside id="chatSidebar" class="w-80 bg-white border-l border-gray-200 shadow-xl flex flex-col absolute right-0 top-0 h-full hidden transform z-40">
+        <div class="flex items-center justify-between border-b p-4">
+          <div class="text-lg font-semibold flex items-center">
+            <i data-lucide="message-square" class="mr-2 h-5 w-5 text-blue-600"></i>
+            Chat Fornitori
+          </div>
+          <button onclick="toggleChat()" class="text-gray-500 hover:text-gray-700">
+            <i data-lucide="x" class="h-5 w-5"></i>
+          </button>
+        </div>
+        <div class="overflow-y-auto flex-1">
+          </div>
+      </aside>
+
+      <button onclick="toggleChat()" class="chat-toggle bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors flex items-center justify-center">
+        <i data-lucide="message-circle" class="h-6 w-6"></i>
+      </button>
+
+    </div>
+  </div>
+
+  <script>
+    // Inizializza le icone Lucide
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+    
+    // Funzione per la chat
+    function toggleChat() {
+      const chat = document.getElementById("chatSidebar");
+      if (chat.classList.contains("hidden")) {
+        chat.classList.remove("hidden");
+        chat.classList.add("slide-in-right");
+      } else {
+        chat.classList.add("slide-out-right");
+        setTimeout(() => {
+          chat.classList.add("hidden");
+          chat.classList.remove("slide-out-right");
+        }, 280);
+      }
+    }
+
+    // Logica per il form di upload
+    document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Impedisce al form di ricaricare la pagina
+
+        const form = event.target;
+        const formData = new FormData(form);
+        const resultArea = document.getElementById('resultArea');
+        const resultPre = resultArea.querySelector('pre');
+        const suppliersArea = document.getElementById('suppliersArea');
+        const suppliersList = document.getElementById('suppliersList');
+        const submitButton = form.querySelector('button');
+
+        // Reset e messaggio di attesa
+        resultArea.classList.remove('hidden');
+        suppliersArea.classList.add('hidden');
+        suppliersList.innerHTML = '';
+        resultPre.textContent = 'Analisi in corso... Potrebbero volerci fino a 30 secondi.';
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i data-lucide="loader" class="animate-spin mr-2 h-5 w-5"></i> Attendi...';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+
+        try {
+            // Chiamiamo il nostro server Python all'endpoint /api/analyze
+            const response = await fetch('/api/analyze', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Mostra il risultato dell'analisi IA
+                try {
+                    const formattedJson = JSON.stringify(JSON.parse(data.analysis_result), null, 2);
+                    resultPre.textContent = formattedJson;
+                } catch (e) {
+                    resultPre.textContent = data.analysis_result; // Se non è JSON valido, lo mostriamo com'è
+                }
+
+                // Mostra i fornitori compatibili
+                if (data.matched_suppliers && data.matched_suppliers.length > 0) {
+                    suppliersArea.classList.remove('hidden');
+                    data.matched_suppliers.forEach(supplier => {
+                        const supplierCard = `
+                            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex items-center justify-between hover:shadow-md transition-shadow">
+                                <p class="font-semibold text-gray-700">${supplier.nome}</p>
+                                <span class="text-sm font-bold text-green-600">Punteggio Compatibilità: ${supplier.punteggio}</span>
+                            </div>
+                        `;
+                        suppliersList.innerHTML += supplierCard;
+                    });
+                } else {
+                    suppliersArea.classList.remove('hidden');
+                    suppliersList.innerHTML = '<p class="text-gray-500">Nessun fornitore con queste specializzazioni trovato nel nostro database simulato.</p>';
+                }
+
+            } else {
+                resultPre.textContent = `Errore: ${data.error}`;
+            }
+
+        } catch (error) {
+            resultPre.textContent = `Errore di connessione: ${error}. Assicurati che il server Python sia in esecuzione.`;
+        } finally {
+            // Riabilita il pulsante
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<i data-lucide="scan-line" class="mr-2 h-5 w-5"></i> Analizza con IA';
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+    });
+  </script>
+
+</body>
+</html>

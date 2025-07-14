@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imposta Disponibilità - Dashboard Fornitore</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+  <style>/* Stili base... */</style>
+</head>
+<body class="bg-gray-100 font-sans">
+  <div class="flex h-screen">
+    <aside class="w-72 bg-white shadow-md p-6">
+      <h1 class="text-2xl font-bold mb-8 text-green-600 flex items-center"><i data-lucide="truck" class="mr-2"></i> Dashboard Fornitore</h1>
+      <nav class="space-y-3">
+        <a href="/fornitore_dashboard.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="layout-dashboard" class="mr-2 h-5 w-5"></i><span>Riepilogo</span></a>
+        <a href="/fornitore_richieste.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="clipboard-list" class="mr-2 h-5 w-5"></i><span>Richieste Clienti</span></a>
+        <a href="/fornitore_prodotti.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="package" class="mr-2 h-5 w-5"></i><span>Prodotti e Capacità</span></a>
+        <a href="/fornitore_qualifiche.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="award" class="mr-2 h-5 w-5"></i><span>Qualifiche e Cert.</span></a>
+        <a href="/fornitore_disponibilita.html" class="flex items-center text-green-600 bg-green-50 p-2 rounded-md hover:bg-green-100 transition-colors"><i data-lucide="calendar-check" class="mr-2 h-5 w-5"></i><span>Imposta Disponibilità</span></a>
+        <div class="pt-4 border-t mt-4">
+          <a href="/fornitore_impostazioni.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="settings" class="mr-2 h-5 w-5"></i><span>Impostazioni</span></a>
+          <a href="/fornitore_supporto.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="help-circle" class="mr-2 h-5 w-5"></i><span>Supporto</span></a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="flex-1 p-10 overflow-y-auto">
+      <h2 class="text-2xl font-bold text-gray-800 mb-8">Imposta la Tua Disponibilità</h2>
+      <div class="bg-white p-8 rounded-lg shadow-md max-w-2xl mx-auto">
+        <form class="space-y-6">
+          <div>
+            <label class="block text-lg font-medium text-gray-800">Stato Attuale</label>
+            <p class="text-sm text-gray-500 mb-4">Indica la tua capacità attuale di accettare nuove commesse.</p>
+            <div class="flex flex-col space-y-3">
+              <label class="flex items-center p-4 border rounded-lg has-[:checked]:bg-green-50 has-[:checked]:border-green-400 cursor-pointer"><input type="radio" name="status" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500 mr-3"><span class="font-medium text-gray-700">Disponibile</span></label>
+              <label class="flex items-center p-4 border rounded-lg has-[:checked]:bg-yellow-50 has-[:checked]:border-yellow-400 cursor-pointer"><input type="radio" name="status" class="h-4 w-4 text-yellow-600 border-gray-300 focus:ring-yellow-500 mr-3"><span class="font-medium text-gray-700">Parzialmente Disponibile (Capacità ridotta)</span></label>
+              <label class="flex items-center p-4 border rounded-lg has-[:checked]:bg-red-50 has-[:checked]:border-red-400 cursor-pointer"><input type="radio" name="status" class="h-4 w-4 text-red-600 border-gray-300 focus:ring-red-500 mr-3"><span class="font-medium text-gray-700">Non Disponibile</span></label>
+            </div>
+          </div>
+          <div class="pt-4">
+            <label for="disponibile_dal" class="block text-lg font-medium text-gray-800">Disponibile dal</label>
+            <p class="text-sm text-gray-500 mb-2">Se non sei disponibile, indica una data approssimativa da cui potrai accettare nuovi lavori.</p>
+            <input type="date" name="disponibile_dal" id="disponibile_dal" class="mt-1 block w-full md:w-1/2 border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm p-2">
+          </div>
+          <div class="flex justify-end pt-6">
+            <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center shadow-md"><i data-lucide="save" class="mr-2 h-5 w-5"></i>Salva Disponibilità</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

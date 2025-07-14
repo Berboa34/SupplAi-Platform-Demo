@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supporto - Dashboard Fornitore</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+  <style>/* Stili base... */</style>
+</head>
+<body class="bg-gray-100 font-sans">
+  <div class="flex h-screen">
+    <aside class="w-72 bg-white shadow-md p-6">
+      <h1 class="text-2xl font-bold mb-8 text-green-600 flex items-center"><i data-lucide="truck" class="mr-2"></i> Dashboard Fornitore</h1>
+      <nav class="space-y-3">
+        <a href="/fornitore_dashboard.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="layout-dashboard" class="mr-2 h-5 w-5"></i><span>Riepilogo</span></a>
+        <a href="/fornitore_richieste.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="clipboard-list" class="mr-2 h-5 w-5"></i><span>Richieste Clienti</span></a>
+        <a href="/fornitore_prodotti.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="package" class="mr-2 h-5 w-5"></i><span>Prodotti e Capacità</span></a>
+        <a href="/fornitore_qualifiche.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="award" class="mr-2 h-5 w-5"></i><span>Qualifiche e Cert.</span></a>
+        <a href="/fornitore_disponibilita.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="calendar-check" class="mr-2 h-5 w-5"></i><span>Imposta Disponibilità</span></a>
+        <div class="pt-4 border-t mt-4">
+          <a href="/fornitore_impostazioni.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="settings" class="mr-2 h-5 w-5"></i><span>Impostazioni</span></a>
+          <a href="/fornitore_supporto.html" class="flex items-center text-green-600 bg-green-50 p-2 rounded-md hover:bg-green-100 transition-colors"><i data-lucide="help-circle" class="mr-2 h-5 w-5"></i><span>Supporto</span></a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="flex-1 p-10 overflow-y-auto">
+      <h2 class="text-2xl font-bold text-gray-800 mb-8">Supporto Fornitori e FAQ</h2>
+      <div class="space-y-8 max-w-4xl mx-auto">
+          <div class="bg-white p-8 rounded-lg shadow-md">
+              <h3 class="text-xl font-semibold mb-6 text-gray-700">Domande Frequenti (FAQ)</h3>
+              <div class="space-y-4">
+                  <div>
+                      <h4 class="font-medium text-gray-800">Come posso migliorare il mio punteggio di matching?</h4>
+                      <p class="text-gray-600 text-sm mt-1">Assicurati che le sezioni "Prodotti e Capacità" e "Qualifiche" siano il più dettagliate e aggiornate possibile. Usa parole chiave pertinenti che i clienti potrebbero cercare.</p>
+                  </div>
+                  <div>
+                      <h4 class="font-medium text-gray-800">Cosa succede quando ricevo una nuova richiesta?</h4>
+                      <p class="text-gray-600 text-sm mt-1">Riceverai una notifica sulla piattaforma e via email. Potrai visualizzare i dettagli del progetto nella sezione "Richieste Clienti" e decidere se inviare una quotazione.</p>
+                  </div>
+              </div>
+          </div>
+          <div class="bg-white p-8 rounded-lg shadow-md">
+              <h3 class="text-xl font-semibold mb-6 text-gray-700">Contatta il Supporto Tecnico</h3>
+              <form class="space-y-4">
+                  <div>
+                      <label for="support_subject" class="block text-sm font-medium text-gray-700">Oggetto</label>
+                      <input type="text" name="support_subject" id="support_subject" placeholder="Es: Problema con una quotazione" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2">
+                  </div>
+                  <div>
+                      <label for="support_message" class="block text-sm font-medium text-gray-700">Messaggio</label>
+                      <textarea name="support_message" id="support_message" rows="4" placeholder="Descrivi il tuo problema o la tua richiesta..." class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"></textarea>
+                  </div>
+                  <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Invia Richiesta</button>
+              </form>
+          </div>
+      </div>
+    </main>
+  </div>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

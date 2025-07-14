@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prodotti e Capacità - Dashboard Fornitore</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+  <style>
+    .chat-toggle { position: fixed; bottom: 20px; right: 20px; z-index: 50; }
+    .slide-in-right { animation: slideInRight 0.3s forwards; }
+    .slide-out-right { animation: slideOutRight 0.3s forwards; }
+    @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    @keyframes slideOutRight { from { transform: translateX(0); } to { transform: translateX(100%); } }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #c5c5c5; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+    .tag-input-container { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0.5rem; border: 1px solid #e5e7eb; border-radius: 0.375rem; }
+    .tag { background-color: #d1fae5; color: #065f46; padding: 0.25rem 0.75rem; border-radius: 0.375rem; font-size: 0.875rem; display: flex; align-items: center; }
+    .tag-remove { margin-left: 0.5rem; cursor: pointer; font-weight: bold; }
+    .tag-input-container input { border: none; outline: none; flex-grow: 1; padding: 0.25rem; }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <div class="flex h-screen">
+
+    <aside class="w-72 bg-white shadow-md p-6">
+      <h1 class="text-2xl font-bold mb-8 text-green-600 flex items-center">
+        <i data-lucide="truck" class="mr-2"></i> Dashboard Fornitore
+      </h1>
+      <nav class="space-y-3">
+        <a href="/fornitore_dashboard.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors">
+          <i data-lucide="layout-dashboard" class="mr-2 h-5 w-5"></i>
+          <span>Riepilogo</span>
+        </a>
+        <a href="/fornitore_richieste.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors">
+          <i data-lucide="clipboard-list" class="mr-2 h-5 w-5"></i>
+          <span>Richieste Clienti</span>
+        </a>
+        <a href="/fornitore_prodotti.html" class="flex items-center text-green-600 bg-green-50 p-2 rounded-md hover:bg-green-100 transition-colors">
+          <i data-lucide="package" class="mr-2 h-5 w-5"></i>
+          <span>Prodotti e Capacità</span>
+        </a>
+        <a href="/fornitore_qualifiche.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors">
+          <i data-lucide="award" class="mr-2 h-5 w-5"></i>
+          <span>Qualifiche e Cert.</span>
+        </a>
+        <a href="/fornitore_disponibilita.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors">
+          <i data-lucide="calendar-check" class="mr-2 h-5 w-5"></i>
+          <span>Imposta Disponibilità</span>
+        </a>
+        <div class="pt-4 border-t mt-4">
+          <a href="/fornitore_impostazioni.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors">
+            <i data-lucide="settings" class="mr-2 h-5 w-5"></i>
+            <span>Impostazioni</span>
+          </a>
+          <a href="/fornitore_supporto.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors">
+            <i data-lucide="help-circle" class="mr-2 h-5 w-5"></i>
+            <span>Supporto</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex relative">
+      <main class="flex-1 p-10 overflow-y-auto">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-2xl font-bold text-gray-800">Gestione Prodotti e Capacità Produttive</h2>
+          <button id="aggiungiProdottoBtn" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md flex items-center text-sm">
+            <i data-lucide="plus-circle" class="mr-2 h-5 w-5"></i>Aggiungi Nuovo
+          </button>
+        </div>
+
+        <div id="formAggiungiProdotto" class="hidden bg-white p-6 md:p-8 rounded-lg shadow-lg mb-8">
+          <h3 class="text-xl font-semibold text-gray-700 mb-6" id="formTitle">Aggiungi Nuovo Prodotto/Capacità</h3>
+          <form class="space-y-6">
+            <div>
+              <label for="nome_prodotto" class="block text-sm font-medium text-gray-700">Nome Prodotto/Servizio/Capacità</label>
+              <input type="text" name="nome_prodotto" id="nome_prodotto" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm p-2" placeholder="Es: Lavorazione CNC Alluminio, Prodotto X Serie Y">
+            </div>
+            <div>
+              <label for="descrizione_prodotto" class="block text-sm font-medium text-gray-700">Descrizione Dettagliata</label>
+              <textarea name="descrizione_prodotto" id="descrizione_prodotto" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm p-2" placeholder="Descrivi le caratteristiche..."></textarea>
+            </div>
+            <div>
+              <label for="categoria_prodotto" class="block text-sm font-medium text-gray-700">Categoria</label>
+              <select id="categoria_prodotto" name="categoria_prodotto" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm rounded-md">
+                <option>Meccanica di Precisione</option>
+                <option>Carpenteria Metallica</option>
+                <option>Stampaggio Plastica</option>
+              </select>
+            </div>
+            <div>
+                <label for="materiali_lavorati_input" class="block text-sm font-medium text-gray-700">Materiali Lavorati (premi Invio per aggiungere)</label>
+                <div id="materiali_tags_container" class="tag-input-container">
+                    <input type="text" id="materiali_lavorati_input" class="tag-input" placeholder="Es: Alluminio, Acciaio Inox...">
+                </div>
+            </div>
+            <div>
+                <label for="tecnologie_usate_input" class="block text-sm font-medium text-gray-700">Macchinari / Tecnologie (premi Invio per aggiungere)</label>
+                <div id="tecnologie_tags_container" class="tag-input-container">
+                    <input type="text" id="tecnologie_usate_input" class="tag-input" placeholder="Es: Fresatrice 5 assi...">
+                </div>
+            </div>
+            <div>
+              <label for="foto_prodotto" class="block text-sm font-medium text-gray-700">Immagine (Opzionale)</label>
+              <input type="file" name="foto_prodotto" id="foto_prodotto" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100">
+            </div>
+            <div class="flex justify-end space-x-3">
+              <button type="button" id="annullaBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-md text-sm">Annulla</button>
+              <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md text-sm">Salva</button>
+            </div>
+          </form>
+        </div>
+
+        <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Elenco Prodotti e Capacità Inseriti</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow">
+            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+              <i data-lucide="tool" class="h-24 w-24 text-gray-400"></i>
+            </div>
+            <div class="p-4">
+              <h4 class="text-lg font-semibold text-gray-800 mb-1">Lavorazione CNC Alluminio Serie 6000</h4>
+              <p class="text-sm text-gray-600 mb-2 truncate">Realizzazione di componenti di precisione in alluminio.</p>
+              <div class="mb-3 flex flex-wrap gap-2">
+                <span class="text-xs font-medium bg-green-100 text-green-700 px-2 py-1 rounded-full">Alluminio</span>
+                <span class="text-xs font-medium bg-green-100 text-green-700 px-2 py-1 rounded-full">CNC 5 Assi</span>
+              </div>
+              <div class="flex justify-end space-x-2 mt-2">
+                <button class="text-blue-600 hover:text-blue-800 p-1" title="Modifica"><i data-lucide="edit-2" class="h-5 w-5"></i></button>
+                <button class="text-red-600 hover:text-red-800 p-1" title="Elimina"><i data-lucide="trash-2" class="h-5 w-5"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow">
+            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+              <i data-lucide="box-select" class="h-24 w-24 text-gray-400"></i>
+            </div>
+            <div class="p-4">
+              <h4 class="text-lg font-semibold text-gray-800 mb-1">Stampaggio Iniezione ABS</h4>
+              <p class="text-sm text-gray-600 mb-2 truncate">Produzione di particolari in ABS per piccole e medie serie.</p>
+              <div class="mb-3 flex flex-wrap gap-2">
+                <span class="text-xs font-medium bg-blue-100 text-blue-700 px-2 py-1 rounded-full">ABS</span>
+                <span class="text-xs font-medium bg-blue-100 text-blue-700 px-2 py-1 rounded-full">Stampaggio Iniezione</span>
+              </div>
+              <div class="flex justify-end space-x-2 mt-2">
+                 <button class="text-blue-600 hover:text-blue-800 p-1" title="Modifica"><i data-lucide="edit-2" class="h-5 w-5"></i></button>
+                <button class="text-red-600 hover:text-red-800 p-1" title="Elimina"><i data-lucide="trash-2" class="h-5 w-5"></i></button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow">
+            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                 <i data-lucide="cpu" class="h-24 w-24 text-gray-400"></i>
+            </div>
+            <div class="p-4">
+              <h4 class="text-lg font-semibold text-gray-800 mb-1">Assemblaggio Schede Elettroniche SMT</h4>
+              <p class="text-sm text-gray-600 mb-2 truncate">Servizio di assemblaggio completo per schede elettroniche.</p>
+              <div class="mb-3 flex flex-wrap gap-2">
+                <span class="text-xs font-medium bg-purple-100 text-purple-700 px-2 py-1 rounded-full">Elettronica</span>
+                <span class="text-xs font-medium bg-purple-100 text-purple-700 px-2 py-1 rounded-full">SMT</span>
+                <span class="text-xs font-medium bg-purple-100 text-purple-700 px-2 py-1 rounded-full">THT</span>
+              </div>
+              <div class="flex justify-end space-x-2 mt-2">
+                 <button class="text-blue-600 hover:text-blue-800 p-1" title="Modifica"><i data-lucide="edit-2" class="h-5 w-5"></i></button>
+                <button class="text-red-600 hover:text-red-800 p-1" title="Elimina"><i data-lucide="trash-2" class="h-5 w-5"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      lucide.createIcons();
+
+      const aggiungiProdottoBtn = document.getElementById('aggiungiProdottoBtn');
+      const formAggiungiProdotto = document.getElementById('formAggiungiProdotto');
+      const annullaBtn = document.getElementById('annullaBtn');
+      const formTitle = document.getElementById('formTitle');
+
+      function toggleForm(show) {
+        if (show) {
+          formAggiungiProdotto.classList.remove('hidden');
+          aggiungiProdottoBtn.classList.add('hidden');
+        } else {
+          formAggiungiProdotto.classList.add('hidden');
+          aggiungiProdottoBtn.classList.remove('hidden');
+          formAggiungiProdotto.querySelector('form').reset();
+          document.querySelectorAll('.tag-input-container .tag').forEach(tag => tag.remove());
+          formTitle.textContent = 'Aggiungi Nuovo Prodotto/Capacità';
+        }
+      }
+
+      if (aggiungiProdottoBtn) aggiungiProdottoBtn.addEventListener('click', () => toggleForm(true));
+      if (annullaBtn) annullaBtn.addEventListener('click', () => toggleForm(false));
+      
+      function setupTagInput(inputId, containerId) {
+        const input = document.getElementById(inputId);
+        const container = document.getElementById(containerId);
+        if (!input || !container) return;
+        input.addEventListener('keypress', function(event) {
+          if (event.key === 'Enter' && input.value.trim() !== '') {
+            event.preventDefault();
+            const tagText = input.value.trim();
+            input.value = ''; 
+            const tag = document.createElement('span');
+            tag.classList.add('tag');
+            tag.textContent = tagText;
+            const removeBtn = document.createElement('span');
+            removeBtn.classList.add('tag-remove');
+            removeBtn.innerHTML = '&times;';
+            removeBtn.onclick = function() { tag.remove(); };
+            tag.appendChild(removeBtn);
+            container.insertBefore(tag, input);
+          }
+        });
+      }
+
+      setupTagInput('materiali_lavorati_input', 'materiali_tags_container');
+      setupTagInput('tecnologie_usate_input', 'tecnologie_tags_container');
+    });
+  </script>
+</body>
+</html>

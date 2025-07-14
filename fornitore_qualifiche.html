@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qualifiche e Certificazioni - Dashboard Fornitore</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+  <style>
+    .chat-toggle { position: fixed; bottom: 20px; right: 20px; z-index: 50; }
+    .slide-in-right { animation: slideInRight 0.3s forwards; }
+    .slide-out-right { animation: slideOutRight 0.3s forwards; }
+    @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    @keyframes slideOutRight { from { transform: translateX(0); } to { transform: translateX(100%); } }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #c5c5c5; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <div class="flex h-screen">
+
+    <aside class="w-72 bg-white shadow-md p-6">
+      <h1 class="text-2xl font-bold mb-8 text-green-600 flex items-center">
+        <i data-lucide="truck" class="mr-2"></i> Dashboard Fornitore
+      </h1>
+      <nav class="space-y-3">
+        <a href="fornitore_dashboard.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors">
+          <i data-lucide="layout-dashboard" class="mr-2 h-5 w-5"></i>
+          <span>Riepilogo</span>
+        </a>
+        <a href="fornitore_richieste.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors">
+          <i data-lucide="clipboard-list" class="mr-2 h-5 w-5"></i>
+          <span>Richieste Clienti</span>
+        </a>
+        <a href="fornitore_prodotti.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors">
+          <i data-lucide="package" class="mr-2 h-5 w-5"></i>
+          <span>Prodotti e Capacità</span>
+        </a>
+        <a href="fornitore_qualifiche.html" class="flex items-center text-green-600 bg-green-50 p-2 rounded-md hover:bg-green-100 transition-colors"> <i data-lucide="award" class="mr-2 h-5 w-5"></i>
+          <span>Qualifiche e Cert.</span>
+        </a>
+        <a href="fornitore_disponibilita.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors">
+          <i data-lucide="calendar-check" class="mr-2 h-5 w-5"></i>
+          <span>Imposta Disponibilità</span>
+        </a>
+        <div class="pt-4 border-t mt-4">
+          <a href="fornitore_impostazioni.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors">
+            <i data-lucide="settings" class="mr-2 h-5 w-5"></i>
+            <span>Impostazioni</span>
+          </a>
+          <a href="fornitore_supporto.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors">
+            <i data-lucide="help-circle" class="mr-2 h-5 w-5"></i>
+            <span>Supporto</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex relative">
+
+      <main class="flex-1 p-10 overflow-y-auto">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-2xl font-bold text-gray-800">Gestione Qualifiche e Certificazioni</h2>
+          <button id="aggiungiQualificaBtn" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md flex items-center text-sm">
+            <i data-lucide="plus-circle" class="mr-2 h-5 w-5"></i>Aggiungi Nuova
+          </button>
+        </div>
+
+        <div id="formAggiungiQualifica" class="hidden bg-white p-6 md:p-8 rounded-lg shadow-lg mb-8">
+          <h3 class="text-xl font-semibold text-gray-700 mb-6" id="formQualificaTitle">Aggiungi Nuova Qualifica/Certificazione</h3>
+          <form class="space-y-6">
+            <div>
+              <label for="nome_qualifica" class="block text-sm font-medium text-gray-700">Nome Qualifica/Certificazione</label>
+              <input type="text" name="nome_qualifica" id="nome_qualifica" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm p-2" placeholder="Es: ISO 9001:2015, Attestato Saldatore PAT">
+            </div>
+
+            <div>
+              <label for="ente_rilasciante" class="block text-sm font-medium text-gray-700">Ente Rilasciante</label>
+              <input type="text" name="ente_rilasciante" id="ente_rilasciante" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm p-2" placeholder="Es: TUV, Bureau Veritas, Scuola Professionale XYZ">
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label for="numero_certificato" class="block text-sm font-medium text-gray-700">Numero Certificato (Opz.)</label>
+                    <input type="text" name="numero_certificato" id="numero_certificato" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm p-2">
+                </div>
+                <div>
+                    <label for="data_rilascio" class="block text-sm font-medium text-gray-700">Data Rilascio</label>
+                    <input type="date" name="data_rilascio" id="data_rilascio" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm p-2">
+                </div>
+                <div>
+                    <label for="data_scadenza" class="block text-sm font-medium text-gray-700">Data Scadenza (Opz.)</label>
+                    <input type="date" name="data_scadenza" id="data_scadenza" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm p-2">
+                </div>
+            </div>
+
+            <div>
+              <label for="documento_qualifica" class="block text-sm font-medium text-gray-700">Carica Documento (PDF, JPG, PNG)</label>
+              <input type="file" name="documento_qualifica" id="documento_qualifica" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100">
+            </div>
+
+            <div class="flex justify-end space-x-3">
+              <button type="button" id="annullaQualificaBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-md text-sm">
+                Annulla
+              </button>
+              <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md text-sm">
+                Salva Qualifica
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Elenco Qualifiche e Certificazioni Inserite</h3>
+        <div class="bg-white shadow-md rounded-lg overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome Qualifica</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ente Rilasciante</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">N. Cert.</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data Rilascio</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data Scadenza</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Documento</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Azioni</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">ISO 9001:2015</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">TÜV SÜD</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CERT-12345</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15/01/2024</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">14/01/2027</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                  <a href="#" class="text-blue-600 hover:text-blue-800" title="Visualizza Documento"><i data-lucide="file-text" class="h-5 w-5"></i></a>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <button class="text-blue-600 hover:text-blue-800 p-1" title="Modifica"><i data-lucide="edit-2" class="h-5 w-5"></i></button>
+                  <button class="text-red-600 hover:text-red-800 p-1" title="Elimina"><i data-lucide="trash-2" class="h-5 w-5"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Attestato Saldatore UNI EN ISO 9606-1</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">IIS CERT</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PAT-W00789</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10/03/2023</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">09/03/2026</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                  <a href="#" class="text-blue-600 hover:text-blue-800" title="Visualizza Documento"><i data-lucide="file-text" class="h-5 w-5"></i></a>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <button class="text-blue-600 hover:text-blue-800 p-1" title="Modifica"><i data-lucide="edit-2" class="h-5 w-5"></i></button>
+                  <button class="text-red-600 hover:text-red-800 p-1" title="Elimina"><i data-lucide="trash-2" class="h-5 w-5"></i></button>
+                </td>
+              </tr>
+              </tbody>
+          </table>
+        </div>
+      </main>
+
+      <aside id="chatSidebar" class="w-80 bg-white border-l border-gray-200 shadow-xl flex flex-col absolute right-0 top-0 h-full hidden transform z-40">
+        <div class="flex items-center justify-between border-b p-4">
+          <div class="text-lg font-semibold flex items-center">
+            <i data-lucide="message-square" class="mr-2 h-5 w-5 text-green-600"></i>
+            Chat Clienti
+          </div>
+          <button onclick="toggleChat()" class="text-gray-500 hover:text-gray-700">
+            <i data-lucide="x" class="h-5 w-5"></i>
+          </button>
+        </div>
+         <div class="border-b flex">
+          <button class="flex-1 py-3 px-4 border-b-2 border-green-600 text-green-600 font-medium flex justify-center">
+            <i data-lucide="users" class="h-4 w-4 mr-1"></i>
+            Tutti
+          </button>
+          <button class="flex-1 py-3 px-4 text-gray-500 hover:text-gray-700 flex justify-center">
+            <i data-lucide="bell" class="h-4 w-4 mr-1"></i>
+            Non letti
+          </button>
+        </div>
+        <div class="p-3 border-b">
+          <div class="flex items-center bg-gray-100 rounded-md px-3 py-2">
+            <i data-lucide="search" class="h-4 w-4 text-gray-500 mr-2"></i>
+            <input type="text" placeholder="Cerca chat..." class="bg-transparent outline-none text-sm w-full">
+          </div>
+        </div>
+        <div class="overflow-y-auto flex-1">
+          </div>
+        <div class="border-t flex flex-col h-64">
+          </div>
+      </aside>
+
+      <button onclick="toggleChat()" class="chat-toggle bg-green-600 text-white p-4 rounded-full shadow-lg hover:bg-green-700 transition-colors flex items-center justify-center">
+        <i data-lucide="message-circle" class="h-6 w-6"></i>
+      </button>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      lucide.createIcons();
+
+      const aggiungiQualificaBtn = document.getElementById('aggiungiQualificaBtn');
+      const formAggiungiQualifica = document.getElementById('formAggiungiQualifica');
+      const annullaQualificaBtn = document.getElementById('annullaQualificaBtn');
+      const formQualificaTitle = document.getElementById('formQualificaTitle');
+
+      function toggleQualificaForm(show) {
+        if (show) {
+          formAggiungiQualifica.classList.remove('hidden');
+          aggiungiQualificaBtn.classList.add('hidden');
+        } else {
+          formAggiungiQualifica.classList.add('hidden');
+          aggiungiQualificaBtn.classList.remove('hidden');
+          formAggiungiQualifica.querySelector('form').reset();
+          formQualificaTitle.textContent = 'Aggiungi Nuova Qualifica/Certificazione';
+        }
+      }
+
+      aggiungiQualificaBtn.addEventListener('click', () => toggleQualificaForm(true));
+      annullaQualificaBtn.addEventListener('click', () => toggleQualificaForm(false));
+    });
+    
+    function toggleChat() {
+      const chat = document.getElementById("chatSidebar");
+      if (chat.classList.contains("hidden")) {
+        chat.classList.remove("hidden");
+        chat.classList.add("slide-in-right");
+      } else {
+        chat.classList.add("slide-out-right");
+        setTimeout(() => {
+          chat.classList.add("hidden");
+          chat.classList.remove("slide-out-right");
+        }, 280);
+      }
+    }
+  </script>
+</body>
+</html>

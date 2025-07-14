@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Impostazioni - Dashboard Fornitore</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+  <style>/* Stili base... */</style>
+</head>
+<body class="bg-gray-100 font-sans">
+  <div class="flex h-screen">
+    <aside class="w-72 bg-white shadow-md p-6">
+      <h1 class="text-2xl font-bold mb-8 text-green-600 flex items-center"><i data-lucide="truck" class="mr-2"></i> Dashboard Fornitore</h1>
+      <nav class="space-y-3">
+        <a href="/fornitore_dashboard.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="layout-dashboard" class="mr-2 h-5 w-5"></i><span>Riepilogo</span></a>
+        <a href="/fornitore_richieste.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="clipboard-list" class="mr-2 h-5 w-5"></i><span>Richieste Clienti</span></a>
+        <a href="/fornitore_prodotti.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="package" class="mr-2 h-5 w-5"></i><span>Prodotti e Capacità</span></a>
+        <a href="/fornitore_qualifiche.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="award" class="mr-2 h-5 w-5"></i><span>Qualifiche e Cert.</span></a>
+        <a href="/fornitore_disponibilita.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="calendar-check" class="mr-2 h-5 w-5"></i><span>Imposta Disponibilità</span></a>
+        <div class="pt-4 border-t mt-4">
+          <a href="/fornitore_impostazioni.html" class="flex items-center text-green-600 bg-green-50 p-2 rounded-md hover:bg-green-100 transition-colors"><i data-lucide="settings" class="mr-2 h-5 w-5"></i><span>Impostazioni</span></a>
+          <a href="/fornitore_supporto.html" class="flex items-center text-gray-700 hover:text-green-600 p-2 rounded-md hover:bg-green-50 transition-colors"><i data-lucide="help-circle" class="mr-2 h-5 w-5"></i><span>Supporto</span></a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="flex-1 p-10 overflow-y-auto">
+      <h2 class="text-2xl font-bold text-gray-800 mb-8">Impostazioni Account Fornitore</h2>
+      <div class="space-y-8 max-w-4xl mx-auto">
+        <div class="bg-white p-8 rounded-lg shadow-md">
+            <h3 class="text-xl font-semibold mb-6 text-gray-700">Dati Aziendali</h3>
+            <form class="space-y-4">
+                <div>
+                    <label for="nome_azienda" class="block text-sm font-medium text-gray-700">Nome Azienda</label>
+                    <input type="text" name="nome_azienda" id="nome_azienda" value="Officina Meccanica Rossi S.r.l." class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2">
+                </div>
+                 <div>
+                    <label for="partita_iva" class="block text-sm font-medium text-gray-700">Partita IVA</label>
+                    <input type="text" name="partita_iva" id="partita_iva" value="IT01234567890" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2">
+                </div>
+                <div>
+                    <label for="email_aziendale" class="block text-sm font-medium text-gray-700">Email di Contatto</label>
+                    <input type="email" name="email_aziendale" id="email_aziendale" value="info@officinerossi.it" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2">
+                </div>
+                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Salva Modifiche</button>
+            </form>
+        </div>
+        <div class="bg-white p-8 rounded-lg shadow-md">
+             <h3 class="text-xl font-semibold mb-6 text-gray-700">Cambia Password</h3>
+             <form class="space-y-4">
+                <div>
+                    <label for="current_password" class="block text-sm font-medium text-gray-700">Password Attuale</label>
+                    <input type="password" name="current_password" id="current_password" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2">
+                </div>
+                <div>
+                    <label for="new_password" class="block text-sm font-medium text-gray-700">Nuova Password</label>
+                    <input type="password" name="new_password" id="new_password" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2">
+                </div>
+                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Cambia Password</button>
+            </form>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
